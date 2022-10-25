@@ -1,0 +1,21 @@
+{
+  "name": "docx-scrambler",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AppleePie/docx-scrambler.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "None",
+  "bugs": {
+    "url": "https://github.com/AppleePie/docx-scrambler/issues"
+  },
+  "homepage": "https://github.com/AppleePie/docx-scrambler#readme",
+  "dependencies": {
+    "docx_editor": "^0.5.0"
+  }
+}
