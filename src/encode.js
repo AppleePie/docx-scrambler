@@ -1,6 +1,6 @@
 import DocumentEditor from "docx_editor";
 
-export default async function encode(wordData, textData) {
+export default async function encode(wordData, textData, space = '25') {
     const docEditor = new DocumentEditor();
 
     await docEditor.extract(wordData);
@@ -39,7 +39,7 @@ export default async function encode(wordData, textData) {
                 }
 
                 if (run['w:t'] === textData[0]) {
-                    run['w:rPr'] = { ...run['w:rPr'], 'w:spacing': { '@_w:val': 20 }};
+                    run['w:rPr'] = { ...run['w:rPr'], 'w:spacing': { '@_w:val': space }};
                     textData = textData.substring(1);
                 }
             }

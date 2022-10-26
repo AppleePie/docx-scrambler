@@ -1,6 +1,6 @@
 import DocumentEditor from "docx_editor";
 
-export default async function decode(wordData) {
+export default async function decode(wordData, space) {
     const docEditor = new DocumentEditor();
 
     await docEditor.extract(wordData);
@@ -17,9 +17,17 @@ export default async function decode(wordData) {
         result = paragraphs
             .filter(Boolean)
             .flatMap(p => Array.isArray(p['w:r']) ? p['w:r'] : [p['w:r']])
-            .filter(r => r?.['w:rPr']?.['w:spacing'])
+            .filter(r => {
+                const styleSpace = r?.['w:rPr']?.['w:spacing'];
+
+                if (space) {
+                    return styleSpace?.['@_w:val'] == space;
+                }
+
+                return styleSpace;
+            })
             .map(r => r['w:t'])
-            .reduce((a, b) => a + b);
+            .reduce((a, b) => a + b, '');
     });
 
     return result;

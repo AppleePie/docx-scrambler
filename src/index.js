@@ -9,32 +9,40 @@ const args = process.argv.slice(2);
 switch (args[0]) {
     case '-e':
     case '--encode': {
-        const [, wordPath, textPath] = args;
+        const [, wordPath, textPath, space] = args;
 
         if (!existsSync(wordPath) || !existsSync(textPath)) {
             throw new Error('Error: Недостаточно файлов для шифрования')
+        }
+
+        if (space && Number.isNaN(Number(space))) {
+            throw new Error('Error: space is not a number');
         }
 
         const [wordData, textData] = await Promise.all(
             [readFile(wordPath), readFile(textPath, { encoding: 'utf-8' })]
         );
 
-        const result = await encode(wordData, textData);
+        const result = await encode(wordData, textData, space);
 
         await writeFile(path.join(process.cwd(), 'document-edited.docx'), result);
         break;
     }
     case '-d':
     case '--decode': {
-        const [, wordPath] = args;
+        const [, wordPath, space] = args;
 
         if (!existsSync(wordPath)) {
             throw new Error('Error: Недостаточно файлов для дешифрования')
         }
 
+        if (space && Number.isNaN(Number(space))) {
+            throw new Error('Error: space is not a number');
+        }
+
         const wordData = await readFile(wordPath);
 
-        const result = await decode(wordData);
+        const result = await decode(wordData, space);
         console.log(result);
 
         break;
